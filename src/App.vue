@@ -1,8 +1,12 @@
 <script>
 import { store } from './store';
 import axios from 'axios';
+import card from './components/card.vue';
 export default {
   name: 'Boolflix',
+  components: {
+    card, 
+  },
   data(){
     return{
       store,
@@ -15,13 +19,16 @@ export default {
       params:{
         api_key: store.config.apiKey,
         query: store.searchKey,
-      }
+        language: store.searchLanguage,
+      },
      })
      .then((response)=> {
       console.log(response);
+      this.store.movies = response.data.results
      })
      .catch((error) => {
       this.errorMessage = error.message;
+      
      });
     },
   },
@@ -36,6 +43,18 @@ export default {
     <button> Search </button>
   </form>
   <div v-if="errorMessage">{{ errorMessage }}</div>
+
+  <ul>
+    <li>
+      <div v-for="movie in store.movies">
+        <h3> {{ movie.title }}</h3>
+        <h4>{{  movie.original_title }}</h4>
+        <p>{{  movie.original_language }}</p>
+        <p>{{  movie.vote_average }}</p>
+       </div>
+       
+    </li>
+  </ul>
 </template>
 
 <style scoped lang="scss">
