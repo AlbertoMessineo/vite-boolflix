@@ -1,6 +1,7 @@
 <script>
+import { store } from './store';
 export default {
-  name: 'DefaultTemplate',
+  name: 'boolflix',
 
   data() {
     return {
@@ -11,7 +12,11 @@ export default {
 </script>
 
 <template>
-  <h1>{{ text }}</h1>
+  <form @submit.prevent="search">
+    <label for="search"> Search </label>
+    <input type="text" id="search" v-model="store.searchKey">
+  </form>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+</style>
